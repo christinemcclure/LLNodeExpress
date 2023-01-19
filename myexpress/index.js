@@ -7,6 +7,9 @@ const PORT = 3000;
 // using the public folder at root
 app.use(express.static("public"));
 
+// useing express.json and express.urlencoded
+app.use(express.json());
+
 // use images folder at route
 app.use("/images", express.static("images"));
 
@@ -14,6 +17,18 @@ app.use("/images", express.static("images"));
 app.get("/", (request, response) => {
     response.json(data);
 });
+
+
+
+//POST - express.json and express.urlencoded
+app.post('/item', (request, response) => {
+    console.log(request.body);
+    response.send(request.body)
+})
+
+
+
+
 
 //route chaining
 app
