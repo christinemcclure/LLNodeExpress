@@ -1,20 +1,21 @@
-import express from "express";
-import data from "./data/mock.json" assert { type: "json" };
+import express from 'express';
+import data from './data/mock.json' assert { type: 'json' };
 
 const app = express();
 const PORT = 3000;
 
 // using the public folder at root
-app.use(express.static("public"));
+app.use(express.static('public'));
 
-// useing express.json and express.urlencoded
-app.use(express.json());
+//Using express.json and express.urlencoded
+// app.use(express.json()); *** this no longer seems to work in 2023
+app.use(express.urlencoded({ extended: true }));
 
 // use images folder at route
-app.use("/images", express.static("images"));
+app.use('/images', express.static('images'));
 
 // GET
-app.get("/", (request, response) => {
+app.get('/', (request, response) => {
     response.json(data);
 });
 
@@ -23,16 +24,14 @@ app.get("/", (request, response) => {
 //POST - express.json and express.urlencoded
 app.post('/item', (request, response) => {
     console.log(request.body);
-    response.send(request.body)
+    response.send(request.body);
 })
-
-
 
 
 
 //route chaining
 app
-    .route("/class")
+    .route('/class')
     .get((request, response) => {
         response.send('Retrieve class info')
     })
@@ -44,7 +43,7 @@ app
     });
 
 // GET with next
-app.get("/next", (request, response, next) => {
+app.get('/next', (request, response, next) => {
     console.log("The response will be sent by the next function");
     next();
 
@@ -54,8 +53,8 @@ app.get("/next", (request, response, next) => {
 );
 
 // redirect method
-app.get("/redirect", (request, response) => {
-    response.redirect("http://linkedin.com");
+app.get('/redirect', (request, response) => {
+    response.redirect('http://linkedin.com');
 });
 
 //get with routing parameters
@@ -68,17 +67,17 @@ app.get('/class/:id', (request, response) => {
 
 
 // POST
-app.post("/create", (request, response) => {
-    response.send("this is a POST request at /create");
+app.post('/create', (request, response) => {
+    response.send('this is a POST request at /create');
 });
 
 // PUT
-app.put("/edit", (request, response) => {
-    response.send("this is a PUT request at /edit");
+app.put('/edit', (request, response) => {
+    response.send('this is a PUT request at /edit');
 });
 
 // DELETE
-app.delete("/delete", (request, response) => {
+app.delete('/delete', (request, response) => {
     response.send("this is a DELETE request at /delete");
 });
 
